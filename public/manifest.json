@@ -1,12 +1,13 @@
 {
   "name": "Atila Atlas",
-  "description": "Search and save crypto and web3 articles on the internet",
+  "description": "Search and save crypto and web3 articles on the internet.",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
-      "default_popup": "index.html",
+      "default_popup": "popup.html",
       "default_title": "Save this Article"
   },
+  "options_page": "index.html",
   "permissions": [
     "activeTab",
     "storage"
