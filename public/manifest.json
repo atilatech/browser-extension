@@ -1,6 +1,6 @@
 {
   "name": "Atila Atlas",
-  "description": "Search and save crypto and web3 articles on the internet.",
+  "description": "Search and save crypto content on the internet.",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
