@@ -1,8 +1,11 @@
 import React from 'react'
+import ContentAddForm from '../../components/ContentAddForm/ContentAddForm'
 
 function PopUp() {
   return (
-    <div>PopUp</div>
+    <div>
+        <ContentAddForm />
+    </div>
   )
 }
 

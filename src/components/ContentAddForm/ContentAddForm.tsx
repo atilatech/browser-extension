@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { Content } from '../models/Content'
+import { Content } from '../../models/Content'
 
 function ContentAddForm() {
 
-    const [content, setContent] = useState<Content>(new Content());
-
-
+   const [content, setContent] = useState<Content>(new Content());
 
    const onUpdateContent = (event: any) => {
       

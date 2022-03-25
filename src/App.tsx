@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/**
+ * While we theoretically don't need this file,
+ *  it's helpful for if we decide to add hierarchy or multiple components to this extensin in the future.
+ * It also maintains convention with the community of using an App.tsx file.
+ * See: https://stackoverflow.com/a/50493780
+ */
 
-function App() {
+import Dashboard from "./scenes/Dashboard/Dashboard";
+ 
+ function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Dashboard />
     </div>
   );
-}
-
-export default App;
+ }
+  
+ export default App;
