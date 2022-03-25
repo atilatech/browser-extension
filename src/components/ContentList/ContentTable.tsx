@@ -1,17 +1,17 @@
 import React from 'react';
 import { Content } from '../../models/Content';
+import "./ContentTable.css";
 
 export interface ContentTableProps {
     contents: Array<Content>;
 };
 
-
 export function ContentTable(props: ContentTableProps) {
 
   const { contents } = props;
   return (
-    <div>
-      <table>
+    <div className="ContentTable">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col" className="wide-column">Name</th>
@@ -25,10 +25,15 @@ export function ContentTable(props: ContentTableProps) {
             <tr key={content.url}>
                 <td>
                 <a className="text-align-left" href={content.url} target="_blank" rel="noopener noreferrer">
-                    {content.title}
+                    {content.title} <br/>
+                    {
+                    content.header_image_url && 
+                    <img src={content.header_image_url} 
+                    alt={content.title} />
+                    }
                 </a>
                 </td>
-                <td>{content.description} </td>
+                <td className="wide-column">{content.description} </td>
                 <td>{content.notes}</td>
             </tr>
           ))}

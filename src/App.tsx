@@ -6,11 +6,13 @@
  */
 
 import Dashboard from "./scenes/Dashboard/Dashboard";
+// import PopUp from "./scenes/PopUp/PopUp";
  
  function App() {
   return (
     <div className="App">
       <Dashboard />
+      {/* <PopUp /> */}
     </div>
   );
  }

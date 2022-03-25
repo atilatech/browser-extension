@@ -24,8 +24,11 @@ function Dashboard() {
   }
 ];
   return (
-    <div>
-        <ContentList contents={sampleContents} />
+    <div className="Dashboard">
+        <div className="container card shadow p-5 mt-3">
+          <h1 className="text-center">Saved Content </h1>
+          <ContentList contents={sampleContents} />
+        </div>
     </div>
   )
 }

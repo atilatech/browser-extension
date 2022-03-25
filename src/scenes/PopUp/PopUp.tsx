@@ -3,8 +3,10 @@ import ContentAddForm from '../../components/ContentAddForm/ContentAddForm'
 
 function PopUp() {
   return (
-    <div>
-        <ContentAddForm />
+    <div className="PopUp">
+        <div className="p-3">
+          <ContentAddForm />
+        </div>
     </div>
   )
 }
