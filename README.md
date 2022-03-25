@@ -8,9 +8,10 @@ A browser extension to search and save crypto content on the internet.
 
 ## Quickstart
 
-### Run as a browser extension
 
-This extension can be run either as a browser extension or as a regular web app.
+This extension can be run as a browser extension or as a regular web app.
+
+### Run as a browser extension
 
 `yarn build:extension`
 
