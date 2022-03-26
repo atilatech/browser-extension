@@ -1,9 +1,9 @@
 import React from 'react';
-import { Content } from '../../models/Content';
+import { SavedContent } from '../../models/Content';
 import "./ContentTable.css";
 
 export interface ContentTableProps {
-    contents: Array<Content>;
+    contents: Array<SavedContent>;
 };
 
 export function ContentTable(props: ContentTableProps) {
@@ -21,20 +21,20 @@ export function ContentTable(props: ContentTableProps) {
         </thead>
 
         <tbody>
-          {contents.map(content => (
-            <tr key={content.url}>
+          {contents.map(savedContent => (
+            <tr key={savedContent.content.url}>
                 <td>
-                <a className="text-align-left" href={content.url} target="_blank" rel="noopener noreferrer">
-                    {content.title} <br/>
+                <a className="text-align-left" href={savedContent.content.url} target="_blank" rel="noopener noreferrer">
+                    {savedContent.content.title} <br/>
                     {
-                    content.header_image_url && 
-                    <img src={content.header_image_url} 
-                    alt={content.title} />
+                    savedContent.content.header_image_url && 
+                    <img src={savedContent.content.header_image_url} 
+                    alt={savedContent.content.title} />
                     }
                 </a>
                 </td>
-                <td className="wide-column">{content.description} </td>
-                <td>{content.notes}</td>
+                <td className="wide-column">{savedContent.content.description} </td>
+                <td>{savedContent.notes}</td>
             </tr>
           ))}
         </tbody>

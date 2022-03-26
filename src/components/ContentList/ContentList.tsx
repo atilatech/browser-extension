@@ -1,9 +1,9 @@
 import React from 'react'
-import { Content } from '../../models/Content';
+import { SavedContent } from '../../models/Content';
 import { ContentTable } from './ContentTable';
 
 export interface ContentListProps {
-  contents: Array<Content>;
+  contents: Array<SavedContent>;
 };
 
 function ContentList(props: ContentListProps) {

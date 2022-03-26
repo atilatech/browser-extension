@@ -1,5 +1,6 @@
 import React from 'react'
 import ContentAddForm from '../../components/ContentAddForm/ContentAddForm'
+import "./PopUp.css";
 
 function PopUp() {
   return (
