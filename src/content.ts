@@ -9,7 +9,6 @@ export {}
 const MAX_DECRIPTION_LENGTH = 750;
 
 chrome.runtime.onMessage.addListener((message: RequestMessage, sender : chrome.runtime.MessageSender, sendResponse : any) => {
-    console.log({message});
     switch (message.type) {
     case "GET_PARENT_PAGE_CONTENT":
       const content = getParentPageContent();
@@ -26,16 +25,37 @@ const getParentPageContent = () => {
   let content =  new Content();
   content = {
     ...content,
-    title: document.title,
-    url: document.URL,
+    title: getPageTitle(),
+    header_image_url: getPageImage(),
+    //remove trailing slash: https://stackoverflow.com/a/6680877/5405197
+    url: `${window.location.origin}${window.location.pathname.replace(/\/$/, "")}`,
     description: getPageDescription().substring(0, MAX_DECRIPTION_LENGTH),
   }
 
-  console.log("window.location", window.location);
-  console.log({content});
-
   return content;
 };
+
+function getPageTitle() {
+
+    const querySelectors = [
+        "meta[itemprop='name']",
+        "meta[property='og:title']",
+        "meta[name='twitter:title']",
+    ]
+
+    return getValuefromSelectors(querySelectors);
+}
+
+function getPageImage() {
+
+    const querySelectors = [
+        "meta[itemprop='image']",
+        "meta[property='og:image']",
+        "meta[name='twitter:image']",
+    ]
+
+    return getValuefromSelectors(querySelectors);
+}
 
 /**
  * Return the first one that contains a valid string
@@ -43,21 +63,25 @@ const getParentPageContent = () => {
  */
 function getPageDescription() {
 
-  const potentialQuerySelectors = [
+  const querySelectors = [
       "meta[itemprop='description']",
       "meta[property='og:description']",
       "meta[name='twitter:description']",
   ]
 
-  let description = "";
+  return getValuefromSelectors(querySelectors);
+}
 
-  for (const querySelector of potentialQuerySelectors) {
-      if (document.querySelector(querySelector)?.getAttribute('content')) {
-          description = document.querySelector(querySelector)?.getAttribute('content') ?? "";
-          return description;
-      }
-  }
+function getValuefromSelectors(querySelectors: Array<string> =[]) {
+    let attributeValue = "";
 
-  return description;
+    for (const querySelector of querySelectors) {
 
+        if (document.querySelector(querySelector)?.getAttribute('content')) {
+            attributeValue = document.querySelector(querySelector)?.getAttribute('content') || "";
+            return attributeValue;
+        }
+    }
+  
+    return attributeValue;
 }

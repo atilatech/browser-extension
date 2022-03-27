@@ -24,6 +24,7 @@ export type StorageHelperResponse = ( response: {items: UrlToSavedContentType | 
 
         chrome.storage.local.get([objectType, "guestUserId"], (items: CustomStorageArea) => {
             let existingObjects = items[objectType];
+            console.log({objectType, items, existingObjects});
 
             if (actionType === "GET") {   
                 responseCallback({items: existingObjects || null})
