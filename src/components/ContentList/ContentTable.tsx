@@ -1,5 +1,6 @@
 import React from 'react';
 import { SavedContent } from '../../models/Content';
+import { TextUtils } from '../../services/utils/TextUtils';
 import "./ContentTable.css";
 
 export interface ContentTableProps {
@@ -33,7 +34,7 @@ export function ContentTable(props: ContentTableProps) {
                     }
                 </a>
                 </td>
-                <td className="wide-column">{savedContent.content.description} </td>
+                <td className="wide-column">{TextUtils.truncate(savedContent.content.description, 140)} </td>
                 <td>{savedContent.notes}</td>
             </tr>
           ))}

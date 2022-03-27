@@ -9,18 +9,18 @@ import { SavedContent } from "../models/Content";
      GET = "GET",
  }
 
- type UrlToSavedContentType = {[url: string]: SavedContent};
+ type SavedContentCollection = {[url: string]: SavedContent};
 
  export interface CustomStorageArea {
-    savedContent?: UrlToSavedContentType,
+    savedContent?: SavedContentCollection,
     guestUserId?: string,
 }
 
-export type StorageHelperResponse = ( response: {items: UrlToSavedContentType | null} ) => any;
+export type StorageHelperResponse = ( response: {items: SavedContentCollection | null} ) => any;
  
  class StorageHelper {
  
-     static performAction = (actionType: ActionTypes, objectType: "savedContent", targetObject: SavedContent, responseCallback: StorageHelperResponse) => {
+     static performAction = (actionType: ActionTypes, objectType: "savedContent", targetObject: SavedContent | null, responseCallback: StorageHelperResponse) => {
 
         chrome.storage.local.get([objectType, "guestUserId"], (items: CustomStorageArea) => {
             let existingObjects = items[objectType];
@@ -28,6 +28,9 @@ export type StorageHelperResponse = ( response: {items: UrlToSavedContentType | 
 
             if (actionType === "GET") {   
                 responseCallback({items: existingObjects || null})
+            }
+            else if(!targetObject){
+                return;
             }
             else if(actionType === "ADD") {
                 if (!existingObjects) {
