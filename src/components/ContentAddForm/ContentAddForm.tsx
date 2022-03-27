@@ -1,11 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SavedContent } from '../../models/Content'
+import { RequestMessage, ResponseMessage } from '../../models/ExtensionMessage';
 import StorageHelper, { ActionTypes } from '../../services/StorageHelper';
 
 function ContentAddForm() {
 
    const [savedContent, setSavedContent] = useState<SavedContent>(new SavedContent());
-   const [isSavedContent, setIsSavedContent] = useState(false)
+   const [isSavedContent, setIsSavedContent] = useState(false);
+
+   useEffect(() => {
+     loadParentPageData();
+   }, []);
+
+   const loadParentPageData = () => {
+    const getContentRequest: RequestMessage = {
+      type: "GET_PARENT_PAGE_CONTENT"
+    }
+    if (chrome.tabs) { // check that chrome exists, for example, when running as a web app in dev environment, chrome.tabs is undefined
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs : any) => {
+          const tabId = tabs[0].id ?? 0;
+          console.log({tabId});
+            chrome.tabs.sendMessage(tabId, getContentRequest, (response: ResponseMessage) => {
+                console.log({response});
+                const parsedContent = response.data.content;
+                setSavedContent(prevSavedContent => ({
+                    ...prevSavedContent,
+                    content: parsedContent
+                }));
+            });
+      });
+    }
+  }
 
    const onUpdateContent = (event: any) => {
       

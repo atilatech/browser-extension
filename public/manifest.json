@@ -8,6 +8,12 @@
       "default_title": "Save this Article"
   },
   "options_page": "index.html",
+  "content_scripts": [
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["./static/js/content.js"]
+    }
+ ],
   "permissions": [
     "activeTab",
     "storage"
