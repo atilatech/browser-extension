@@ -31,7 +31,7 @@ Visit [chrome://extensions](chrome://extensions) in Chrome browser and click loa
 To view all the items in your storage:
 
 ```javascript
-chrome.storage.sync.get(null,function(items){
+chrome.storage.local.get(null,function(items){
  console.log(items);
 })
 ```
@@ -39,7 +39,7 @@ chrome.storage.sync.get(null,function(items){
 To delete a specific item at that key:
 
 ```javascript
-chrome.storage.sync.get({savedContent: {}}, function(items) {
+chrome.storage.local.get({savedContent: {}}, function(items) {
     delete items.savedContent['<url_to_delete>']
     console.log("items.savedContent", items.savedContent) // confirm that this looks like what you expect
     chrome.storage.REMOVE_IF_YOU_ARE_SURE.set(items, function() {

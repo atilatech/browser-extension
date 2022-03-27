@@ -35,7 +35,7 @@ export type StorageHelperResponse = ( response: {items: UrlToSavedContentType | 
                 }
                 existingObjects[targetObject.content.url || targetObject.content.title] = targetObject
     
-                chrome.storage.sync.set({ [objectType] : existingObjects }, function() {
+                chrome.storage.local.set({ [objectType] : existingObjects }, function() {
                     if(responseCallback) {
                         responseCallback({items: existingObjects || null});
                     }

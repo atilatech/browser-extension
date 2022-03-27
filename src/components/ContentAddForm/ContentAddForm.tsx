@@ -21,9 +21,7 @@ function ContentAddForm() {
     if (chrome.tabs) { // check that chrome exists, for example, when running as a web app in dev environment, chrome.tabs is undefined
       chrome.tabs.query({active: true, currentWindow: true}, (tabs : any) => {
           const tabId = tabs[0].id ?? 0;
-          console.log({tabId});
             chrome.tabs.sendMessage(tabId, getContentRequest, (response: ResponseMessage) => {
-                console.log({response});
                 const parsedContent = response.data.content;
                 setSavedContent(prevSavedContent => ({
                     ...prevSavedContent,
@@ -86,17 +84,19 @@ function ContentAddForm() {
             }
 
             <label htmlFor="contentNotes">Notes</label>
-            <textarea tabIndex={0} value={savedContent.notes} name="notes" onChange={updateContent}
-                    autoFocus
+            {!isSavedContent && 
+            <textarea value={savedContent.notes} name="notes" onChange={updateContent}
                 onKeyDown={keyDownHandler}
-                id="contentNotes" className="form-control mb-3" placeholder="Notes" rows={2}></textarea>
+                id="contentNotes" className="form-control mb-3" placeholder="Notes" rows={2}></textarea>}
 
             {isSavedContent ?
                 <p className="text-success">
                     Saved Content!
                 </p> 
                 :
-                <button id="saveContentButton" className="btn btn-primary mt-3" onClick={saveContent}>
+                <button id="saveContentButton" className="btn btn-primary mt-3" 
+                onClick={saveContent}
+                autoFocus>
                     Save
                 </button>
                     
