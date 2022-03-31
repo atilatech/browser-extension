@@ -7,6 +7,7 @@ import { SavedContent } from "../models/Content";
  export enum ActionTypes {
      ADD = "ADD",
      GET = "GET",
+     DELETE = "DELETE",
  }
 
  type SavedContentCollection = {[url: string]: SavedContent};
@@ -27,28 +28,32 @@ export type StorageHelperResponse = ( response: {items: SavedContentCollection |
             console.log({objectType, items, existingObjects});
 
             if (actionType === "GET") {   
-                responseCallback({items: existingObjects || null})
+                responseCallback({items: existingObjects || null});
+                return
             }
             else if(!targetObject){
                 return;
             }
-            else if(actionType === "ADD") {
+            let targetObjectId = targetObject.content.url || targetObject.content.title;
+            if(actionType === ActionTypes.ADD) {
                 if (!existingObjects) {
                     existingObjects = {};
                 }
-                let targetObjectId = targetObject.content.url || targetObject.content.title;
                 if (!existingObjects[targetObjectId]) {
                     targetObject.date_created = new Date().toISOString();
                 }
                 targetObject.date_modified = new Date().toISOString();
-                existingObjects[targetObjectId] = targetObject
-    
-                chrome.storage.local.set({ [objectType] : existingObjects }, function() {
-                    if(responseCallback) {
-                        responseCallback({items: existingObjects || null});
-                    }
-                });
+                existingObjects[targetObjectId] = targetObject;
+            } else if (actionType === ActionTypes.DELETE && existingObjects) {
+                delete existingObjects[targetObjectId];
             }
+    
+            chrome.storage.local.set({ [objectType] : existingObjects }, function() {
+                if(responseCallback) {
+                    responseCallback({items: existingObjects || null});
+                }
+            });
+
         });
     }
 
