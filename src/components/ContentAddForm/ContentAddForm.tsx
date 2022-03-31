@@ -54,7 +54,7 @@ function ContentAddForm() {
 
     const keyDownHandler: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
         console.log({event});
-        if(event.currentTarget.name === "notes" && event.key === "Enter" && event.shiftKey == false) {
+        if(event.currentTarget.name === "notes" && event.key === "Enter" && event.shiftKey === false) {
           event.preventDefault();
           saveContent();
         }
@@ -79,7 +79,7 @@ function ContentAddForm() {
             </p>
             {savedContent.content.header_image_url && 
                 <div>
-                    <img src={savedContent.content.header_image_url} width="150" />
+                    <img src={savedContent.content.header_image_url} alt={savedContent.content.title} width="150" />
                 </div>
             }
 

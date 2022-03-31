@@ -36,7 +36,12 @@ export type StorageHelperResponse = ( response: {items: SavedContentCollection |
                 if (!existingObjects) {
                     existingObjects = {};
                 }
-                existingObjects[targetObject.content.url || targetObject.content.title] = targetObject
+                let targetObjectId = targetObject.content.url || targetObject.content.title;
+                if (!existingObjects[targetObjectId]) {
+                    targetObject.date_created = new Date().toISOString();
+                }
+                targetObject.date_modified = new Date().toISOString();
+                existingObjects[targetObjectId] = targetObject
     
                 chrome.storage.local.set({ [objectType] : existingObjects }, function() {
                     if(responseCallback) {

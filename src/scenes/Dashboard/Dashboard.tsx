@@ -1,6 +1,5 @@
 import React from 'react'
-import ContentList from '../../components/ContentList/ContentList'
-import { SavedContent } from '../../models/Content';
+import ContentList from '../../components/ContentList/ContentList';
 
 function Dashboard() {
 
