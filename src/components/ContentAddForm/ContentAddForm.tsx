@@ -61,6 +61,7 @@ function ContentAddForm() {
 
     const saveContent = () => {
 
+        savedContent.date_created = new Date().toISOString();
         StorageHelper.performAction(ActionTypes.ADD, "savedContent", savedContent, ({items}) => {
           setIsSavedContent(true);
         });
