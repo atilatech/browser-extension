@@ -53,7 +53,6 @@ function ContentAddForm() {
     };
 
     const keyDownHandler: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
-        console.log({event});
         if(event.currentTarget.name === "notes" && event.key === "Enter" && event.shiftKey === false) {
           event.preventDefault();
           saveContent();
