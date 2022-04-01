@@ -9,7 +9,8 @@ export interface ContentTableProps {
 
 export function ContentTable(props: ContentTableProps) {
 
-  const { contents } = props;
+  let { contents } = props;
+  contents = Object.values(contents).sort((a,b)=> (a?.date_created ?? "") < (b?.date_created ?? "") ? 1 : -1);
   return (
     <div className="ContentTable">
       <table className="table">
