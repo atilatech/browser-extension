@@ -52,11 +52,13 @@ function ContentList() {
     }
 
     StorageHelper.performAction(ActionTypes.GET, "savedContent", null, (response) => {
-      setContents(Object.values(response.items || []));
+
+      let contentList = Object.values(response.items || []);
+      contentList = Object.values(contentList).sort((a,b)=> (a?.date_modified ?? "") < (b?.date_modified ?? "") ? 1 : -1);
+      setContents(contentList);
     })
 
     const storageChangedListener = (storageChange: { [key: string]: chrome.storage.StorageChange }, areaName: chrome.storage.AreaName) => {
-      console.log({storageChange, areaName});
       const { savedContent } = storageChange;
       if (savedContent && savedContent.oldValue !== savedContent.newValue) {
         setContents(Object.values(savedContent.newValue || []));
