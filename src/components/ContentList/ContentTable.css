@@ -5,3 +5,7 @@
     width: 150px;
     height: auto;
 }
+
+.Content--notes {
+    white-space: pre-wrap;
+}

@@ -21,14 +21,14 @@ export type StorageHelperResponse = ( response: {items: SavedContentCollection |
  
  class StorageHelper {
  
-     static performAction = (actionType: ActionTypes, objectType: "savedContent", targetObject: SavedContent | null, responseCallback: StorageHelperResponse) => {
+     static performAction = (actionType: ActionTypes, objectType: "savedContent", targetObject: SavedContent | null, responseCallback?: StorageHelperResponse) => {
 
         chrome.storage.local.get([objectType, "guestUserId"], (items: CustomStorageArea) => {
             let existingObjects = items[objectType];
             console.log({objectType, items, existingObjects});
 
             if (actionType === "GET") {   
-                responseCallback({items: existingObjects || null});
+                responseCallback?.({items: existingObjects || null});
                 return
             }
             else if(!targetObject){
@@ -49,9 +49,7 @@ export type StorageHelperResponse = ( response: {items: SavedContentCollection |
             }
     
             chrome.storage.local.set({ [objectType] : existingObjects }, function() {
-                if(responseCallback) {
-                    responseCallback({items: existingObjects || null});
-                }
+                responseCallback?.({items: existingObjects || null});
             });
 
         });

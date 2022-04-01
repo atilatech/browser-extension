@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 import { SavedContent } from '../../models/Content';
 import StorageHelper, { ActionTypes } from '../../services/StorageHelper';
 import { TextUtils } from '../../services/utils/TextUtils';
 import "./ContentTable.css";
-
 export interface ContentTableProps {
     contents: Array<SavedContent>;
 };
@@ -41,15 +40,46 @@ export interface ContentTableRowProps {
 
 export function ContentTableRow(props: ContentTableRowProps) {
 
-  const { savedContent } = props;
+  const [savedContent, setSavedContent] = useState<SavedContent>(props.savedContent);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
 
-  // TODO: can yo re
+  // TODO: are we allowed to remove a component in it's own component?
   const removeScholarship = () => {
-    StorageHelper.performAction(ActionTypes.DELETE, "savedContent", savedContent, (response) => {
-      console.log({response});
-    });
+    StorageHelper.performAction(ActionTypes.DELETE, "savedContent", savedContent);
   };
+
+  const saveContent = () => {
+    StorageHelper.performAction(ActionTypes.ADD, "savedContent", savedContent);
+  };
+
+  const updateContent: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+
+    event.preventDefault();
+    const value = event!.target!.value;
+    const name = event.target.name;
+    if (name === "notes") {
+        const updatedSavedContent = {
+            ...savedContent,
+            [name]: value,
+          }
+        setSavedContent(updatedSavedContent) 
+    }
+  };
+
+  const toggleIsEditing = () => {
+    if (isEditing){
+      saveContent()
+    }
+    setIsEditing(!isEditing);
+  };
+
+  const keyDownHandler: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
+    if(event.currentTarget.name === "notes" && event.key === "Enter" && event.shiftKey === false) {
+      event.preventDefault();
+      toggleIsEditing();
+    }
+}
 
   return (
     <tr>
@@ -64,7 +94,15 @@ export function ContentTableRow(props: ContentTableRowProps) {
       </a>
       </td>
       <td className="wide-column">{TextUtils.truncate(savedContent.content.description, 140)} </td>
-      <td>{savedContent.notes}</td>
+      <td>
+        {isEditing ?
+          <textarea rows={4} value={savedContent.notes} name="notes" onChange={updateContent} onKeyDown={keyDownHandler} className="form-control" placeholder="Notes" />:
+          <p className="Content--notes">{savedContent.notes}</p>
+        }
+        <button className="btn btn-link" onClick={toggleIsEditing}>
+          {isEditing ? 'Save' : 'Edit'}
+        </button>
+        </td>
       <td>
         <button className="btn btn-link text-danger remove-in-clipboard" onClick={removeScholarship}>
           Remove
