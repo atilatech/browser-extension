@@ -1,13 +1,12 @@
 # Atila Browser Extension
 
-A browser extension to search and save crypto content on the internet.
+A browser extension to save pages on the internet.
 
 ## Installation
 
 `yarn install`
 
 ## Quickstart
-
 
 This extension can be run as a browser extension or as a regular web app.
 
@@ -21,6 +20,14 @@ Visit [chrome://extensions](chrome://extensions) in Chrome browser and click loa
 `yarn install`
 
 `yarn start`
+
+## Publish to Chrome Store
+
+1. Update the version number in `manifest.json`
+1. Build deployment package: `yarn build:extension`
+1. Zip `zip -r build.zip build`
+1. [Upload package in Chrome web store developer dashboard](https://chrome.google.com/webstore/devconsole)
+1. Follow instructions on page to submit for review
 
 ## Working with the Chrome Storage
 
