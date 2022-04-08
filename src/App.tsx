@@ -6,15 +6,18 @@
  */
 
 import Dashboard from "./scenes/Dashboard/Dashboard";
-// import PopUp from "./scenes/PopUp/PopUp";
+import PopUp from "./scenes/PopUp/PopUp";
  
  function App() {
+
+  // used in debugging to show the popup
+  const showPopUp = window.location.origin.startsWith("http://localhost") && window.location.pathname.startsWith("/popup")
   return (
     <div className="App">
-      <Dashboard />
-      {/* <PopUp /> */}
+      {!showPopUp && <Dashboard />}
+      {showPopUp && <PopUp />}
     </div>
   );
  }
-  
+
  export default App;
