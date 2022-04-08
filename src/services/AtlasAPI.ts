@@ -5,7 +5,7 @@ class AtlasAPI {
     static search = (query: string) => {
     
             // TODO add a test to ensure that that post scholarship is called with the correct format that the Atila API expects
-            const apiResponsePromise = fetch(`${Environment.apiUrl}/api/search/?q=${query}`, {
+            const apiResponsePromise = fetch(`${Environment.apiUrl}/api/atlas/search/?q=${query}`, {
                 method: 'GET',
                 headers: {
                 'Accept': 'application/json',
