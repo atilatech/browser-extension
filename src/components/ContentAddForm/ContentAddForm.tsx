@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler, KeyboardEventHandler, useEffect, useState } from 'react'
 import { SavedContent } from '../../models/Content'
 import { RequestMessage, ResponseMessage } from '../../models/ExtensionMessage';
+import AtlasAPI from '../../services/AtlasAPI';
 import StorageHelper, { ActionTypes } from '../../services/StorageHelper';
 import { TextUtils } from '../../services/utils/TextUtils';
 import './ContentAddForm.css';
@@ -65,6 +66,11 @@ function ContentAddForm() {
         StorageHelper.performAction(ActionTypes.ADD, "savedContent", savedContent, ({items}) => {
           setIsSavedContent(true);
         });
+        AtlasAPI.save(savedContent.content)
+                .then()
+                .catch(err => {
+                    console.log({err});
+                })
 
     };
 
