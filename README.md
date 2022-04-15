@@ -10,6 +10,14 @@ A browser extension to save pages on the internet.
 
 This extension can be run as a browser extension or as a regular web app.
 
+## Environment Variables
+
+Make sure you set the following environment variables:
+
+```bash
+REACT_APP_ATLAS_API_URL_DEV="<YOUR_API_URL>"# for example:"http://127.0.0.1:8000"
+REACT_APP_ATLAS_API_URL_PROD="<YOUR_API_URL>"
+```
 ### Run as a browser extension
 
 `yarn build:extension`
