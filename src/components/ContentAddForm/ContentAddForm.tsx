@@ -68,7 +68,7 @@ function ContentAddForm() {
         });
         AtlasAPI.save(savedContent.content)
                 .then()
-                .catch(err => {
+                .catch((err: any) => {
                     console.log({err});
                 })
 
