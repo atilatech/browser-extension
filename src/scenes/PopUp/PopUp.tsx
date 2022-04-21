@@ -1,6 +1,7 @@
 import React from 'react'
 import ContentAddForm from '../../components/ContentAddForm/ContentAddForm'
 import Search from '../../components/Search/Search';
+import Settings from '../../components/Settings/Settings';
 import "./PopUp.css";
 
 function PopUp() {
@@ -14,6 +15,9 @@ function PopUp() {
           <li className="nav-item" role="presentation">
             <button className="nav-link" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab" aria-controls="search" aria-selected="false">Search</button>
           </li>
+          <li className="nav-item" role="presentation">
+            <button className="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+          </li>
         </ul>
         <div className="tab-content" id="popupTabContent">
           <div className="tab-pane fade show active" id="add" role="tabpanel" aria-labelledby="add-tab">
@@ -21,6 +25,9 @@ function PopUp() {
           </div>
           <div className="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
             <Search />
+          </div>
+          <div className="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <Settings />
           </div>
         </div>
 

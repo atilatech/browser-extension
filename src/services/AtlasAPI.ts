@@ -26,6 +26,14 @@ class AtlasAPI {
         });
     };
 
+
+    static getAPIKeyCreditByPublicKey = (publicKey: string) => {
+        return fetchHelper(`${Environment.apiUrl}/api/payment/api-key-credits/public-key/?public_key=${publicKey}/`, {
+            method: 'GET',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+        });
+    };
+
     static search = (query: string) => {
         return fetchHelper(`${Environment.apiUrl}/api/atlas/search/?q=${query}`, {
             method: 'GET',
