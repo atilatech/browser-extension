@@ -18,7 +18,10 @@ function Settings() {
                 [name]: value,
             }
             setApiKeyCredit(updatedApiKeyCredit);
-            localStorage.setItem("atlasAPIKeyCredit", value);
+            // a full public key has 32 characters, so fetch credit details when a full key is received
+            if(apiKeyCredit.public_key?.length >= 32) {
+                localStorage.setItem("atlasAPIKeyCredit", value);
+            }
         }
   };
 
