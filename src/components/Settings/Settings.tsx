@@ -23,18 +23,22 @@ function Settings() {
 
   const loadApiKeyCredit = useCallback(
     () => {
-        AtlasAPI.getAPIKeyCreditByPublicKey(apiKeyCredit.public_key)
-        .then((res: any)=> {
-           const { results } = res;
-           if (results.length > 0) {
-               setApiKeyCredit(results[0]);
-           }
-       })
-       .catch((err: any) => {
-           console.log({err});
-       })
+        // a full public key has 32 characters, so fetch credit details when a full key is received
+        if(apiKeyCredit.public_key?.length >= 32) {
+            AtlasAPI.getAPIKeyCreditByPublicKey(apiKeyCredit.public_key)
+            .then((res: any)=> {
+               const { results } = res;
+               if (results.length > 0) {
+                   setApiKeyCredit(results[0]);
+               }
+           })
+           .catch((err: any) => {
+               console.log({err});
+           })
+
+        }
     },
-    []
+    [apiKeyCredit.public_key]
   );
 
     useEffect(() => {
