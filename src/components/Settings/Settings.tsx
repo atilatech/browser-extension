@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useState } from 'react'
+import React, { ChangeEventHandler, useCallback, useEffect, useState } from 'react'
 import { APIKeyCredit } from '../../models/APIKeyCredit';
 import AtlasAPI from '../../services/AtlasAPI';
 
@@ -19,25 +19,27 @@ function Settings() {
             setApiKeyCredit(updatedApiKeyCredit);
             localStorage.setItem("atlasAPIKeyCredit", value);
         }
-   };
+  };
 
-   const loadApiKeyCredit = () => {
- 
-         AtlasAPI.getAPIKeyCreditByPublicKey(apiKeyCredit.public_key)
-         .then((res: any)=> {
-            const { results } = res;
-            if (results.length > 0) {
-                setApiKeyCredit(results[0]);
-            }
-        })
-        .catch((err: any) => {
-            console.log({err});
-        })
-    };
+  const loadApiKeyCredit = useCallback(
+    () => {
+        AtlasAPI.getAPIKeyCreditByPublicKey(apiKeyCredit.public_key)
+        .then((res: any)=> {
+           const { results } = res;
+           if (results.length > 0) {
+               setApiKeyCredit(results[0]);
+           }
+       })
+       .catch((err: any) => {
+           console.log({err});
+       })
+    },
+    []
+  );
 
     useEffect(() => {
         loadApiKeyCredit();
-    }, [])
+    }, [loadApiKeyCredit])
 
 
 
