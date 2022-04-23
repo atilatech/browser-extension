@@ -21,6 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:extension": "INLINE_RUNTIME_CHUNK=false craco build && node createPopupBuild.js",
+    "build:extension:prod": "export REACT_APP_ATILA_STAGE=prod && npm run build:extension",
+    "build:extension:dev": "export REACT_APP_ATILA_STAGE=dev && npm run build:extension",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
