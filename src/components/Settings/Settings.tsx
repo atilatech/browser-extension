@@ -5,6 +5,7 @@ import AtlasAPI from '../../services/AtlasAPI';
 function Settings() {
 
   const [apiKeyCredit, setApiKeyCredit] = useState<APIKeyCredit>({public_key: localStorage.getItem("atlasAPIKeyCredit") || ""});
+  const [loading, setLoading] = useState("");
 
   const updateApiKeyCredit: ChangeEventHandler<HTMLInputElement> = (event) => {
 
@@ -25,6 +26,7 @@ function Settings() {
     () => {
         // a full public key has 32 characters, so fetch credit details when a full key is received
         if(apiKeyCredit.public_key?.length >= 32) {
+            setLoading("Loading API key...");
             AtlasAPI.getAPIKeyCreditByPublicKey(apiKeyCredit.public_key)
             .then((res: any)=> {
                const { results } = res;
@@ -34,6 +36,9 @@ function Settings() {
            })
            .catch((err: any) => {
                console.log({err});
+           })
+           .then(()=> {
+            setLoading("");
            })
 
         }
@@ -61,12 +66,20 @@ function Settings() {
                 </a>
             </p>
 
-        {apiKeyCredit.search_credits_available && 
+        {!Number.isNaN(apiKeyCredit.search_credits_available) && 
             <div>
                 <h3>Available Credits</h3>
                 <p>
                     Search credits available: {apiKeyCredit.search_credits_available}
                 </p>
+            </div>
+        }
+        {loading && 
+            <div>
+                {loading}
+                <div className="spinner-grow text-primary m-3" role="status">
+                    <span className="sr-only"/>
+                </div>
             </div>
         }
 
