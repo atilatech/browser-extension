@@ -5,6 +5,7 @@ export class Collection {
     title: string = "";
     contents: Array<CollectionContent> = [];
     exported_collection_url: string = "";
+    imported_collection_url: string = "";
 }
 
 

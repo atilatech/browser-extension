@@ -13,5 +13,9 @@
    fs.writeFile("./build/popup.html", result, 'utf8', function (err) {
       if (err) return console.log(err);
    });
+ 
+   fs.writeFile("./build/collection.html", result, 'utf8', function (err) {
+      if (err) return console.log(err);
+   });
  });
  

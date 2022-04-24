@@ -6,9 +6,15 @@ import { create as ipfsHttpClient } from 'ipfs-http-client';
 
 const client = (ipfsHttpClient as any)('https://ipfs.infura.io:5001/api/v0');
 
-function CollectionList() {
+export interface CollectionListProps {
+    collectionId: string;
+}
+
+function CollectionList(props: CollectionListProps) {
   const [collection, setCollection] = useState(new Collection());
   const [loading, setLoading] = useState("");
+
+  const { collectionId } = props;
   
   useEffect(() => {
     getCollections();
@@ -16,9 +22,7 @@ function CollectionList() {
 
   const getCollections = () => {
     setLoading("Loading");
-    console.log("window.location.search", window.location.search);
-    const params = new URLSearchParams(window.location.search);
-    AtlasAPI.getCollection(params.get('id') || '')
+    AtlasAPI.getCollection(collectionId)
               .then((res: any)=> {
                   console.log({res});
                   setCollection(res);
@@ -75,7 +79,7 @@ function CollectionList() {
         </button>
         <div>Collection: {collection.title}</div>
         {collection.exported_collection_url && 
-            <a href={collection.exported_collection_url} target="_blank">
+            <a href={collection.exported_collection_url} target="_blank" rel="noreferrer">
                 View Exported Collection
             </a>
         }

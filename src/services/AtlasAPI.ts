@@ -51,12 +51,13 @@ class AtlasAPI {
         });
     };
 
-    static createCollection = (title: string, contents: Array<any>) => {
+    static createCollection = (title: string, imported_collection_url: string, contents: Array<any>) => {
         return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
             method: 'POST',
             headers: AtlasAPI.getHeadersWithAPIKey(),
             body: JSON.stringify({
                 title,
+                imported_collection_url,
                 contents
             }),
         });

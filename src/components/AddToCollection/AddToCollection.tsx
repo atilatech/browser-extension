@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react'
 import { Collection } from '../../models/Collection';
 import { Content } from '../../models/Content';
+import CollectionList from '../../scenes/CollectionList/CollectionList';
 import AtlasAPI from '../../services/AtlasAPI';
 
 
@@ -13,6 +14,7 @@ function AddToCollection(props: AddToCollectionProps) {
   const [collection, setCollection] = useState(new Collection());
   const [existingCollections, setExistingCollections] = useState<Array<Collection>>([])
   const [loading, setLoading] = useState("");
+  const [displayedCollectionId, setDisplayedCollectionId] = useState("");
 
   const { content } = props;
 
@@ -33,7 +35,7 @@ function AddToCollection(props: AddToCollectionProps) {
   }, []);
 
   const getCollections = () => {
-    setLoading("Loading");
+    setLoading("Getting collections");
     AtlasAPI.getCollections(collection.title, [{url: content.url}])
               .then((res: any)=> {
                   console.log({res});
@@ -51,11 +53,12 @@ function AddToCollection(props: AddToCollectionProps) {
 
 
   const createCollection = () => {
-    setLoading("Loading");
-      AtlasAPI.createCollection(collection.title, [{url: content.url}])
+    setLoading("Creating Collection");
+      AtlasAPI.createCollection(collection.title, collection.imported_collection_url, [{url: content.url}])
                 .then((res: any)=> {
                     console.log({res});
                     setCollection(res);
+                    getCollections();
                 })
                 .catch((err: any) => {
                     console.log({err});
@@ -80,6 +83,10 @@ function AddToCollection(props: AddToCollectionProps) {
                     setLoading("");
                 })
   }
+
+  const showCollection = (collectionId: string) => {
+    setDisplayedCollectionId(displayedCollectionId === collectionId ? "" : collectionId);
+  }
   
   return (
     <div>
@@ -90,23 +97,27 @@ function AddToCollection(props: AddToCollectionProps) {
             <>
                 <div>
                     <input name="title" placeholder="Collection Title" onChange={updateCollection} value={collection.title} />
+                    <input name="imported_collection_url" placeholder="URL to import" onChange={updateCollection} value={collection.imported_collection_url} />
                     <button onClick={createCollection}>Save Collection</button>
                 </div>
                 {existingCollections.length > 0 && 
                 <ol>
                     {existingCollections.map(existingCollection => (
                     <li>
-                        <a href={`/collection/?id=${existingCollection.id}`}>
+                        <button className="btn btn-link" onClick={()=> {showCollection(existingCollection.id)}}>
                         {existingCollection.title}
-                        </a>
+                        </button>
                     
 
-                        <button onClick={() => {addToCollection(existingCollection.id)}}>
+                        <button className="btn btn-link" onClick={() => {addToCollection(existingCollection.id)}}>
                             Add to Collection   
                         </button>             
                     </li>
                     ))}
                 </ol>
+                }
+                {displayedCollectionId && 
+                <CollectionList collectionId={displayedCollectionId} />
                 }
             </>
         }
