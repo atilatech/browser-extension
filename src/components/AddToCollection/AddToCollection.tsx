@@ -66,35 +66,49 @@ function AddToCollection(props: AddToCollectionProps) {
                 })
       
   }
+
+  const addToCollection = (selectedCollectionId: string) => {
+    AtlasAPI.addToCollection(selectedCollectionId, [{url: content.url}])
+                .then((res: any)=> {
+                    console.log({res});
+                })
+                .catch((err: any) => {
+                    console.log({err});
+                    setLoading("");
+                })
+                .finally(() => {
+                    setLoading("");
+                })
+  }
   
   return (
     <div>
         <button onClick={()=>{setShowNewCollectionForm(true)}}>
-            Add to Collection
+            Show Collections
         </button>
         {showNewCollectionForm && 
-            <div>
-                <input name="title" placeholder="Collection Title" onChange={updateCollection} value={collection.title} />
-                <button onClick={createCollection}>Save Collection</button>
-            </div>
-        
-        }
-        {existingCollections.length > 0 && 
-        <ol>
-            {existingCollections.map(existingCollection => (
-            <li>
-                <a href={`/collection/?id=${existingCollection.id}`}>
-                {existingCollection.title}
-                </a>
-               
+            <>
+                <div>
+                    <input name="title" placeholder="Collection Title" onChange={updateCollection} value={collection.title} />
+                    <button onClick={createCollection}>Save Collection</button>
+                </div>
+                {existingCollections.length > 0 && 
+                <ol>
+                    {existingCollections.map(existingCollection => (
+                    <li>
+                        <a href={`/collection/?id=${existingCollection.id}`}>
+                        {existingCollection.title}
+                        </a>
+                    
 
-               <button>
-                    Add to Collection   
-                </button>             
-            </li>
-            ))}
-        </ol>
-        
+                        <button onClick={() => {addToCollection(existingCollection.id)}}>
+                            Add to Collection   
+                        </button>             
+                    </li>
+                    ))}
+                </ol>
+                }
+            </>
         }
         {loading && 
             <div>

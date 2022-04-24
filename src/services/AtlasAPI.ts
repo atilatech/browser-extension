@@ -72,6 +72,16 @@ class AtlasAPI {
             method: 'GET',
         });
     }
+
+    static addToCollection = (collectionId: string, contents: Array<any>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/${collectionId}/add-to-collection/`, {
+            method: 'POST',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify({
+                contents
+            }),
+        });
+    }
 }
 
 export default AtlasAPI;
