@@ -1,3 +1,4 @@
+import { Collection } from "../models/Collection";
 import { Content } from "../models/Content";
 import Environment from "./Environment";
 import fetchHelper from "./FetchHelper";
@@ -80,6 +81,14 @@ class AtlasAPI {
             body: JSON.stringify({
                 contents
             }),
+        });
+    }
+
+    static updateCollection = (collectionId: string, updateData: Partial<Collection>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/${collectionId}/`, {
+            method: 'PATCH',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify(updateData),
         });
     }
 }
