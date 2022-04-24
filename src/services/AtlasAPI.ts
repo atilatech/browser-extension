@@ -4,6 +4,7 @@ import fetchHelper from "./FetchHelper";
 
 class AtlasAPI {
 
+    static atlasApiURL = `${Environment.apiUrl}/api/atlas`;
     static ATILA_API_CREDITS_PUBLIC_KEY_HEADER_NAME = 'X-ATILA-API-CREDITS-PUBLIC-KEY';
     static ATILA_API_CREDITS_PUBLIC_KEY_LOCAL_STORAGE_KEY_NAME = 'atlasAPIKeyCredit';
     static DEFAULT_HEADERS = {
@@ -48,6 +49,23 @@ class AtlasAPI {
             body: JSON.stringify({content}),
         });
     };
+
+    static createCollection = (title: string, contents: Array<any>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
+            method: 'POST',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify({
+                title,
+                contents
+            }),
+        });
+    }
+
+    static getCollections = (title: string, contents: Array<any>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
+            method: 'GET',
+        });
+    }
 }
 
 export default AtlasAPI;

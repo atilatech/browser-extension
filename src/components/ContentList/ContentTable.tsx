@@ -2,6 +2,7 @@ import React, { ChangeEventHandler, KeyboardEventHandler, useState } from 'react
 import { SavedContent } from '../../models/Content';
 import StorageHelper, { ActionTypes } from '../../services/StorageHelper';
 import { TextUtils } from '../../services/utils/TextUtils';
+import AddToCollection from '../AddToCollection/AddToCollection';
 import "./ContentTable.css";
 export interface ContentTableProps {
     contents: Array<SavedContent>;
@@ -107,6 +108,7 @@ export function ContentTableRow(props: ContentTableRowProps) {
         <button className="btn btn-link text-danger remove-in-clipboard" onClick={removeScholarship}>
           Remove
         </button>
+        <AddToCollection content={savedContent.content} />
       </td>
     </tr>
 
