@@ -5,6 +5,7 @@
  * See: https://stackoverflow.com/a/50493780
  */
 
+import CollectionList from "./scenes/CollectionList/CollectionList";
 import Dashboard from "./scenes/Dashboard/Dashboard";
 import PopUp from "./scenes/PopUp/PopUp";
  
@@ -12,10 +13,19 @@ import PopUp from "./scenes/PopUp/PopUp";
 
   // used in debugging to show the popup
   const showPopUp = window.location.origin.startsWith("http://localhost") && window.location.pathname.startsWith("/popup")
+
+
+  // show the collection list
+  const showCollectionList = window.location.origin.startsWith("http://localhost") && window.location.pathname.startsWith("/collection")
+
   return (
     <div className="App">
-      {!showPopUp && <Dashboard />}
-      {showPopUp && <PopUp />}
+      {showCollectionList ?  <CollectionList /> :
+        <div>
+          {!showPopUp && <Dashboard />}
+          {showPopUp && <PopUp />}
+        </div>
+      }
     </div>
   );
  }

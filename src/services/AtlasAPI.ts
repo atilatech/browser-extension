@@ -66,6 +66,12 @@ class AtlasAPI {
             method: 'GET',
         });
     }
+
+    static getCollection = (collectionId: string) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/${collectionId}/`, {
+            method: 'GET',
+        });
+    }
 }
 
 export default AtlasAPI;

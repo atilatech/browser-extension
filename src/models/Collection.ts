@@ -9,5 +9,5 @@ export class Collection {
 
 export interface CollectionContent {
     collection: Collection;
-    content: Array<Content>;
+    content: Content;
 }

@@ -83,7 +83,10 @@ function AddToCollection(props: AddToCollectionProps) {
         <ol>
             {existingCollections.map(existingCollection => (
             <li>
-               {existingCollection.title}
+                <a href={`/collection/?id=${existingCollection.id}`}>
+                {existingCollection.title}
+                </a>
+               
 
                <button>
                     Add to Collection   
