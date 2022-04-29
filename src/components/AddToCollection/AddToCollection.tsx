@@ -1,9 +1,9 @@
-import React, { ChangeEventHandler, useEffect, useState } from 'react'
+import React, { ChangeEventHandler, useCallback, useEffect, useState } from 'react'
 import { Collection } from '../../models/Collection';
 import { Content } from '../../models/Content';
 import CollectionList from '../../scenes/CollectionList/CollectionList';
 import AtlasAPI from '../../services/AtlasAPI';
-
+import "./AddToCollection.css";
 
 export interface AddToCollectionProps {
     content: Content,
@@ -26,30 +26,33 @@ function AddToCollection(props: AddToCollectionProps) {
                 ...collection,
                 [name]: value,
         };
-        console.log({updatedCollection});
         setCollection(updatedCollection);
   };
 
+  const getCollections = useCallback(
+    () => {
+        setLoading("Getting collections");
+        AtlasAPI.list()
+                  .then((res: any)=> {
+                      console.log({res});
+                      setExistingCollections(res.results);
+                  })
+                  .catch((err: any) => {
+                      console.log({err});
+                      setLoading("");
+                  })
+                  .finally(() => {
+                      setLoading("");
+                  })
+        
+      },
+    [],
+  );
+
   useEffect(() => {
     getCollections();
-  }, []);
-
-  const getCollections = () => {
-    setLoading("Getting collections");
-    AtlasAPI.getCollections(collection.title, [{url: content.url}])
-              .then((res: any)=> {
-                  console.log({res});
-                  setExistingCollections(res.results);
-              })
-              .catch((err: any) => {
-                  console.log({err});
-                  setLoading("");
-              })
-              .finally(() => {
-                  setLoading("");
-              })
-    
-  }
+  }, [getCollections]);
+  
 
 
   const createCollection = () => {
@@ -89,18 +92,23 @@ function AddToCollection(props: AddToCollectionProps) {
   }
   
   return (
-    <div>
-        <button onClick={()=>{setShowNewCollectionForm(true)}}>
-            Show Collections
+    <div className="AddToCollection">
+        <button onClick={()=>{setShowNewCollectionForm(!showNewCollectionForm)}} className="btn btn-link">
+            {showNewCollectionForm ? 'Hide ' : 'Show '} Collections
         </button>
         {showNewCollectionForm && 
             <>
                 <div>
-                    <input name="title" placeholder="Collection Title" onChange={updateCollection} value={collection.title} />
-                    <input name="imported_collection_url" placeholder="URL to import" onChange={updateCollection} value={collection.imported_collection_url} />
-                    <button onClick={createCollection}>Save Collection</button>
+                    <input name="title" placeholder="Collection Title"  className="mb-1"
+                    onChange={updateCollection} value={collection.title} />
+                    <button onClick={createCollection} className="btn btn-link">Save New Collection</button>
                 </div>
                 {existingCollections.length > 0 && 
+                <div>
+                    <hr/>
+                    <p>
+                        Existing Collections
+                    </p>
                 <ol>
                     {existingCollections.map(existingCollection => (
                     <li>
@@ -115,6 +123,7 @@ function AddToCollection(props: AddToCollectionProps) {
                     </li>
                     ))}
                 </ol>
+                </div>
                 }
                 {displayedCollectionId && 
                 <CollectionList collectionId={displayedCollectionId} />

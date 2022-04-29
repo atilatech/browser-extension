@@ -63,7 +63,7 @@ class AtlasAPI {
         });
     }
 
-    static getCollections = (title: string, contents: Array<any>) => {
+    static list = () => {
         return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
             method: 'GET',
         });

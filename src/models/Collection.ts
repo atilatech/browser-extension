@@ -10,6 +10,7 @@ export class Collection {
 
 
 export interface CollectionContent {
+    id: string;
     collection: Collection;
     content: Content;
 }
