@@ -96,7 +96,7 @@ function AddToCollection(props: AddToCollectionProps) {
                 <div>
                     <input name="title" placeholder="Collection Title"  className="mb-1"
                     onChange={updateCollection} value={collection.title} />
-                    <button onClick={createCollection} className="btn btn-link">Save New Collection</button>
+                    <button onClick={createCollection} className="btn btn-link">Save to New Collection</button>
                 </div>
                 {existingCollections.length > 0 && 
                     <div>
@@ -107,8 +107,8 @@ function AddToCollection(props: AddToCollectionProps) {
                     <ol>
                         {existingCollections.map(existingCollection => (
                         <li>
-                            <a href={`${Environment.clientUrl}/collection/${collection.slug}`} target="_blank" rel="noreferrer">
-                            {collection.title}
+                            <a href={`${Environment.clientUrl}/collection/${existingCollection.slug}`} target="_blank" rel="noreferrer">
+                            {existingCollection.title}
                             </a>
 
                             <button className="btn btn-link" onClick={() => {addToCollection(existingCollection.id)}}>
