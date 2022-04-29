@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { ContentCard } from '../../components/ContentCard/ContentCard';
 import { Collection } from '../../models/Collection';
 import AtlasAPI from '../../services/AtlasAPI';
+import Environment from '../../services/Environment';
 export interface CollectionListProps {
     collectionId: string;
 }
@@ -50,7 +51,13 @@ function CollectionList(props: CollectionListProps) {
                 </div>
             </div>
         }
-        <div>Collection: {collection.title}</div>
+        <div>Collection: 
+          <a href={`${Environment.clientUrl}/collection/${collection.slug}`} target="_blank" rel="noreferrer">
+          {collection.title}
+          </a>
+          
+          
+          </div>
           {collection.contents.map(collectionContent => <ContentCard content={collectionContent.content} key={collectionContent.content.id} />)}
         </div>
     </div>

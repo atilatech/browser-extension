@@ -1,8 +1,8 @@
 import React, { ChangeEventHandler, useCallback, useEffect, useState } from 'react'
 import { Collection } from '../../models/Collection';
 import { Content } from '../../models/Content';
-import CollectionList from '../../scenes/CollectionList/CollectionList';
 import AtlasAPI from '../../services/AtlasAPI';
+import Environment from '../../services/Environment';
 import "./AddToCollection.css";
 
 export interface AddToCollectionProps {
@@ -14,7 +14,6 @@ function AddToCollection(props: AddToCollectionProps) {
   const [collection, setCollection] = useState(new Collection());
   const [existingCollections, setExistingCollections] = useState<Array<Collection>>([])
   const [loading, setLoading] = useState("");
-  const [displayedCollectionId, setDisplayedCollectionId] = useState("");
 
   const { content } = props;
 
@@ -86,10 +85,6 @@ function AddToCollection(props: AddToCollectionProps) {
                     setLoading("");
                 })
   }
-
-  const showCollection = (collectionId: string) => {
-    setDisplayedCollectionId(displayedCollectionId === collectionId ? "" : collectionId);
-  }
   
   return (
     <div className="AddToCollection">
@@ -104,29 +99,25 @@ function AddToCollection(props: AddToCollectionProps) {
                     <button onClick={createCollection} className="btn btn-link">Save New Collection</button>
                 </div>
                 {existingCollections.length > 0 && 
-                <div>
-                    <hr/>
-                    <p>
-                        Existing Collections
-                    </p>
-                <ol>
-                    {existingCollections.map(existingCollection => (
-                    <li>
-                        <button className="btn btn-link" onClick={()=> {showCollection(existingCollection.id)}}>
-                        {existingCollection.title}
-                        </button>
-                    
+                    <div>
+                        <hr/>
+                        <p>
+                            Existing Collections
+                        </p>
+                    <ol>
+                        {existingCollections.map(existingCollection => (
+                        <li>
+                            <a href={`${Environment.clientUrl}/collection/${collection.slug}`} target="_blank" rel="noreferrer">
+                            {collection.title}
+                            </a>
 
-                        <button className="btn btn-link" onClick={() => {addToCollection(existingCollection.id)}}>
-                            Add to Collection   
-                        </button>             
-                    </li>
-                    ))}
-                </ol>
-                </div>
-                }
-                {displayedCollectionId && 
-                <CollectionList collectionId={displayedCollectionId} />
+                            <button className="btn btn-link" onClick={() => {addToCollection(existingCollection.id)}}>
+                                Add to Collection   
+                            </button>             
+                        </li>
+                        ))}
+                    </ol>
+                    </div>
                 }
             </>
         }
