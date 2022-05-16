@@ -1,0 +1,4 @@
+.AddToCollection input {
+    /* To match the padding of the inputs which have padding: 0.375rem 0.75rem from .btn*/
+    margin-left: 0.75rem;
+}

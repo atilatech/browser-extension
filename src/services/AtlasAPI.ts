@@ -1,9 +1,11 @@
+import { Collection } from "../models/Collection";
 import { Content } from "../models/Content";
 import Environment from "./Environment";
 import fetchHelper from "./FetchHelper";
 
 class AtlasAPI {
 
+    static atlasApiURL = `${Environment.apiUrl}/api/atlas`;
     static ATILA_API_CREDITS_PUBLIC_KEY_HEADER_NAME = 'X-ATILA-API-CREDITS-PUBLIC-KEY';
     static ATILA_API_CREDITS_PUBLIC_KEY_LOCAL_STORAGE_KEY_NAME = 'atlasAPIKeyCredit';
     static DEFAULT_HEADERS = {
@@ -48,6 +50,48 @@ class AtlasAPI {
             body: JSON.stringify({content}),
         });
     };
+
+    static createCollection = (title: string, imported_collection_url: string, contents: Array<any>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
+            method: 'POST',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify({
+                title,
+                imported_collection_url,
+                contents
+            }),
+        });
+    }
+
+    static list = () => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
+            method: 'GET',
+        });
+    }
+
+    static getCollection = (collectionId: string) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/${collectionId}/`, {
+            method: 'GET',
+        });
+    }
+
+    static addToCollection = (collectionId: string, contents: Array<any>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/${collectionId}/add-to-collection/`, {
+            method: 'POST',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify({
+                contents
+            }),
+        });
+    }
+
+    static updateCollection = (collectionId: string, updateData: Partial<Collection>) => {
+        return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/${collectionId}/`, {
+            method: 'PATCH',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify(updateData),
+        });
+    }
 }
 
 export default AtlasAPI;

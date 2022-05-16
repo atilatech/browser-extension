@@ -12,6 +12,7 @@ import PopUp from "./scenes/PopUp/PopUp";
 
   // used in debugging to show the popup
   const showPopUp = window.location.origin.startsWith("http://localhost") && window.location.pathname.startsWith("/popup")
+
   return (
     <div className="App">
       {!showPopUp && <Dashboard />}

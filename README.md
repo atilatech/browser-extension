@@ -12,7 +12,8 @@ This extension can be run as a browser extension or as a regular web app.
 
 ## Environment Variables
 
-Make sure you set the following environment variables:
+Make sure you set the following environment variables 
+(see `shared.env` for an example of what environment variables you'll need to set):
 
 ```bash
 REACT_APP_ATLAS_API_URL_DEV="<YOUR_API_URL>"# for example:"http://127.0.0.1:8000"
