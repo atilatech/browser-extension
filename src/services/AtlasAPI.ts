@@ -51,6 +51,14 @@ class AtlasAPI {
         });
     };
 
+    static login = ({username, password}: {username: string, password: string}) => {
+        return fetchHelper(`${Environment.apiUrl}/api/login/`, {
+            method: 'POST',
+            headers: AtlasAPI.getHeadersWithAPIKey(),
+            body: JSON.stringify({username, password}),
+        });
+    };
+
     static createCollection = (title: string, imported_collection_url: string, contents: Array<any>) => {
         return fetchHelper(`${AtlasAPI.atlasApiURL}/collection/`, {
             method: 'POST',

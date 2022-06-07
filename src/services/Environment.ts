@@ -1,8 +1,10 @@
 export const EnvironmentDev = {
     // TODO load apiUrl from environment variable
     // apiUrl: process.env.REACT_APP_ATLAS_API_URL,
-    apiUrl: process.env.REACT_APP_ATLAS_API_URL_DEV,
-    clientUrl: process.env.REACT_APP_ATLAS_CLIENT_URL_DEV,
+    // The reason we use 127.0.0.1 for apiUrl and localhost for clientUrl
+    // is simply due to convention.
+    apiUrl: "http://127.0.0.1:8000",
+    clientUrl: "'http://localhost:3000",
 };
 
 export const EnvironmentProd = {
