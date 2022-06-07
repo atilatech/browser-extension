@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && echo '/*    /index.html   200' > build/_redirects",
     "build:extension": "INLINE_RUNTIME_CHUNK=false craco build && node createPopupBuild.js",
     "build:extension:prod": "export REACT_APP_ATILA_STAGE=prod && npm run build:extension",
     "build:extension:dev": "export REACT_APP_ATILA_STAGE=dev && npm run build:extension",
