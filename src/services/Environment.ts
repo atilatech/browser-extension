@@ -6,8 +6,8 @@ export const EnvironmentDev = {
 };
 
 export const EnvironmentProd = {
-    apiUrl: process.env.REACT_APP_ATLAS_API_URL_PROD || "",
-    clientUrl: process.env.REACT_APP_ATLAS_CLIENT_URL_PROD,
+    apiUrl: "https://atila-7.herokuapp.com",
+    clientUrl: "https://atila.ca",
 };
 
 // set to EnvironmentDev as the default so we can use type hinting and the autocomplete feature
