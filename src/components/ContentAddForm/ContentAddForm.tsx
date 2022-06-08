@@ -6,6 +6,8 @@ import StorageHelper, { ActionTypes } from '../../services/StorageHelper';
 import { TextUtils } from '../../services/utils/TextUtils';
 import './ContentAddForm.css';
 
+const chrome: Window["chrome"] = window.chrome || {};
+
 function ContentAddForm() {
 
    const [savedContent, setSavedContent] = useState<SavedContent>(new SavedContent());
