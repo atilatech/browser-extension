@@ -3,6 +3,8 @@ import { Content } from '../../models/Content';
 import AtlasAPI from '../../services/AtlasAPI';
 import { ContentCard } from '../ContentCard/ContentCard';
 
+const chrome: Window["chrome"] = window.chrome || {};
+
 function Search() {
 
    const [searchQuery, setSearchQuery] = useState("");

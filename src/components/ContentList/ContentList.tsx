@@ -4,6 +4,8 @@ import StorageHelper, { ActionTypes } from '../../services/StorageHelper';
 import { ContentTable } from './ContentTable';
 
 
+const chrome: Window["chrome"] = window.chrome || {};
+
 const sampleContents: Array<SavedContent> = [
   {
     content: {
